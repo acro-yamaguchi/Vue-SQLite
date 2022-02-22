@@ -1,7 +1,9 @@
 <template>
   <div class="about">
-    <h1>{{ data_from_php.message }} {{ data_from_php.name }}!</h1>
-    <h2>{{ data_from_php.date }}</h2>
+    <v-card v-for="n in data_from_php.length" :key="n">
+      <v-card-title>{{ data_from_php[n - 1].title }}</v-card-title>
+      <v-card-content>内容</v-card-content>
+    </v-card>
   </div>
 </template>
 
@@ -14,8 +16,9 @@ export default {
     }
   },
   created() {
-    axios.get('/Vue-SQLite/test/dist//api/test.php').then((response) => {
+    axios.get('/Vue-SQLite/test/dist/api/test.php').then((response) => {
       this.data_from_php = response.data
+      console.log(this.data_from_php)
     })
   }
 }
