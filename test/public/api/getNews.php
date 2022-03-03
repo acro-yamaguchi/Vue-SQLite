@@ -1,11 +1,6 @@
 <?php 
-//     $date = date('Y年n月j日'); 
-//     $ary = array('message'=>'Hello', 'name'=>'John', 'date'=>$date);
-
-//     echo json_encode($ary, JSON_UNESCAPED_UNICODE)
-
     try {
-        $db = new SQLite3("../../db/test.db");
+        $db = new SQLite3("../../db/happyposition.db");
         // 取得（SELECT）
         $result = $db->query('SELECT* FROM news');
         // 配列を初期化

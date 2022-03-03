@@ -2,8 +2,16 @@
   <div class="contact">
     <v-container fluid>
       <v-row justify="center" class="mt-5">
-        <v-col cols="12" class="text-h5 text-center">【お問い合わせフォーム】</v-col>
+        <v-col cols="12" class="text-h5 text-center" id="form_top">【お問い合わせフォーム】</v-col>
         <v-col cols="12" md="8" class="mb-6">
+          <v-alert
+            :type='alert_type'
+            dismissible
+            v-model="alert"
+            dense
+          >
+          {{ alert_message }}
+          </v-alert>
           <v-form ref="form">
             <v-row>
               <v-col cols="5" class="text-body-1 text-center cell_top cell_left">
@@ -90,6 +98,8 @@
               <v-btn
                 color="success"
                 large
+                @click="submit"
+                :loading="loading"
               >送信</v-btn>
             </v-row>
           </v-form>
@@ -100,6 +110,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
@@ -108,6 +119,7 @@ export default {
       phone: null,
       category: '',
       items: ['お仕事', '求人', 'その他'],
+      title: '',
       content: '',
       nameRules: [
         v => !!v || 'お名前の入力は必須です',
@@ -127,10 +139,88 @@ export default {
         v => !!v || 'お問い合わせ内容の入力は必須です',
         v => v.length <= 500 || 'お問い合わせ内容は500文字までです。',
       ],
+      loading: false, //「送信」ボタンのローディング制御
+      //↓アラート関連
+      alert: false,
+      alert_type: 'success',
+      alert_message: '',
     }
   },
-  created() {
-  }
+  methods: {
+    submit() {
+      //全てのバリデーションに通過したとき
+      if(this.$refs.form.validate()){
+          this.loading = true
+          this.save_to_db()
+          try{
+            //テーブルの内容をバックエンドに送信
+            axios.post('./api/contact.php', {
+              name: this.name,
+              email: this.email,
+              phone: this.phone,
+              category: this.category,
+              title: this.title,
+              content: this.content
+            })
+            .then((response) => {
+              if(response.data.result){
+                console.log('メール送信: 成功')
+                this.alert_type = 'success'
+                this.alert_message = '送信が完了しました!'
+                this.alert = true
+                this.$refs.form.clear()
+              } else {
+                console.log('メール送信: 失敗')
+                this.alert_type = 'error'
+                this.alert_message = 'メールの送信に失敗しました'
+                this.alert = true  
+              }
+                this.$vuetify.goTo('#form_top')
+                this.loading = false
+            })
+          }
+          catch{
+            console.log('DB送信: 接続エラー')
+            this.loading = false
+            this.alert_type = 'error'
+            this.alert_message = '通信エラーが発生しました'
+            this.alert = true
+            this.$vuetify.goTo('#form_top')
+
+          }
+      //バリデーションに通過しないとき
+      } else {
+          this.alert_type = 'warning'
+          this.alert_message = '入力が正しくありません'
+          this.alert = true
+          this.$vuetify.goTo('#form_top')
+
+      }
+    },
+    save_to_db() {
+      try{
+        //テーブルの内容をバックエンドに送信
+        axios.post('./api/saveMail.php', {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          category: this.category,
+          title: this.title,
+          content: this.content
+        })
+        .then((response) => {
+          if(response.data.result) {
+            console.log('DB送信: 成功')
+          } else {
+            console.log('DB送信: 失敗')
+          }
+        })
+      }
+      catch{
+        console.log('DB送信: 接続エラー')
+      }
+    },
+  },
 }
 </script>
 

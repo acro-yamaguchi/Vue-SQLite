@@ -27,25 +27,25 @@
               代 表
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
-              代表取締役 神田幸志郎
+              代表取締役 神田幸志朗
             </v-col>
             <v-col cols="5" class="text-body-1 text-center cell cell_left">
               本 社
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
-              これから追加
+              札幌市中央区北6条西11丁目ベル・グランドーレ 402
             </v-col>
             <v-col cols="5" class="text-body-1 text-center cell cell_left">
               主要取引銀行
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
-              これから追加
+              北海道銀行 札幌駅前支店
             </v-col>
             <v-col cols="5" class="text-body-1 text-center cell cell_left">
               業務内容
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
-              これから追加
+              ソフトウェア/システムの品質保証、テスト事業
             </v-col>
           </v-row>
         </v-col>

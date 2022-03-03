@@ -3,8 +3,7 @@
     <v-app-bar
       app
       color="#b5e61d"
-      prominent
-      dense
+      short
       flat
     >
       <div class="d-flex align-center">
@@ -12,36 +11,40 @@
           alt="Happy Position Logo"
           contain
           src="@/assets/logo.png"
-          height="96"
-          max-width="96"
+          height="56"
+          max-width="56"
           transition="scale-transition"
         />
         <v-toolbar-title class="text-subtitle-1 text-md-h5">Happy Position ホームページ</v-toolbar-title>
       </div>
-    </v-app-bar>
-
-    <v-main>
-      <v-tabs
+      <template v-slot:extension>
+        <v-tabs
         background-color="#b5e61d"
         grow
         color="basil"
-      >
-        <v-tab
-          v-for="tab in tabs"
-          :key="tab"
-          :to="tab.to"
         >
-          {{ tab.name }}
-        </v-tab>
-      </v-tabs>
-      <v-container fluid>
-        <v-row justify="center">
-          <v-img
-            alt="画像"
-            src="@/assets/sample.jpg"
-            max-height="400"
-            transition="fade-transition"
-          />
+          <v-tab
+            v-for="tab in tabs"
+            :key="tab"
+            :to="tab.to"
+          >
+            {{ tab.name }}
+          </v-tab>
+        </v-tabs>
+      </template>
+    </v-app-bar>
+
+    <v-main>
+      <v-container fluid class="pa-0">
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" md="9">
+            <v-img
+              alt="画像"
+              src="@/assets/Top.png"
+              width="100%"
+              transition="fade-transition"
+            />
+          </v-col>
         </v-row>
         <v-row justify="center">
           <span class="text-h5 my-5">【お知らせ】</span>
@@ -61,11 +64,38 @@
                   <v-btn
                     text
                     color="primary"
+                    plain
+                    @click.stop="show_detail(item)"
                   >>詳細を見る</v-btn>
+                  
                 </v-card-action>
               </v-card>
             </v-slide-item>
           </v-slide-group>
+          <v-dialog v-model="dialog" max-width="800">
+            <v-card>
+              <v-card-title class="text-h5">
+                {{ dialog_title }}
+              </v-card-title>
+              <v-card-text>
+                <v-img
+                  src="@/assets/news_sample.jpg"
+                  width="100%"
+                />
+                {{ dialog_content }}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="#b5e61d"
+                  text
+                  @click.stop="dialog = false"
+                >
+                  CLOSE
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-row>
       </v-container>
       <router-view/>
@@ -91,11 +121,21 @@ export default {
       { name:'会社案内', to: '/about' },
     ],
     news: [],
+    dialog: false,
+    dialog_title: '',
+    dialog_content: '',
   }),
   created() {
-    axios.get('/Vue-SQLite/test/dist/api/test.php').then((response) => {
+    axios.get('./api/getNews.php').then((response) => {
       this.news = response.data
     })
+  },
+  methods: {
+    show_detail(item) {
+      this.dialog = true
+      this.dialog_title = item.title
+      this.dialog_content = item.content
+    }
   }
 };
 </script>
