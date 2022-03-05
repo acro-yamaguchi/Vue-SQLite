@@ -5,43 +5,43 @@
         <v-col cols="12" class="text-h5 text-center">【会社概要】</v-col>
         <v-col cols="12" md="8" class="mb-6">
           <v-row>
-            <v-col cols="5" class="text-body-1 text-center cell_top cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell_top remove_border-right">
               会社名
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell_top">
               株式会社Happy Position
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               設 立
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
               2022年2月22日
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               資本金
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
               2,000,000円
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               代 表
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
               代表取締役 神田幸志朗
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               本 社
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
               札幌市中央区北6条西11丁目ベル・グランドーレ 402
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               主要取引銀行
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
               北海道銀行 札幌駅前支店
             </v-col>
-            <v-col cols="5" class="text-body-1 text-center cell cell_left">
+            <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
               業務内容
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
@@ -73,7 +73,8 @@ export default {
   border: solid;
 }
 
-.cell_left {
+.remove_border-right {
   border-right: none;
 }
+
 </style>

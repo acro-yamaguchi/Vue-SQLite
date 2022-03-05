@@ -46,42 +46,43 @@
             />
           </v-col>
         </v-row>
-        <v-row justify="center">
-          <span class="text-h5 my-5">【お知らせ】</span>
-          <v-slide-group show-arrows center-active>
-            <v-slide-item
-              v-for="item in news"
-              :key="item"
-            >
-              <v-card style="margin:0 20px 8px 0; width: 480px; height: 280px;">
-                <v-img
-                  height="120px"
-                  src="@/assets/news_sample.jpg"
-                />
-                <v-card-title>{{ item.title }}</v-card-title>
-                <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
-                <v-card-action>
-                  <v-btn
-                    text
-                    color="primary"
-                    plain
-                    @click.stop="show_detail(item)"
-                  >>詳細を見る</v-btn>
-                  
-                </v-card-action>
-              </v-card>
-            </v-slide-item>
-          </v-slide-group>
+        <v-row justify="center" align="center">
+          <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
+          <v-col cols="12" style="justify-content: center">
+            <v-slide-group show-arrows center-active>
+              <v-slide-item
+                v-for="item in news"
+                :key="item"
+              >
+                <v-card
+                v-resize="onResize"
+                :width="$vuetify.breakpoint.mobile ? (display_width - 112) : (display_width - 128) / 2"
+                style="margin:0 20px 8px 0; height: 280px;">
+                  <v-img
+                    height="120px"
+                    src="@/assets/news_sample.jpg"
+                  />
+                  <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
+                  <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
+                  <v-card-action>
+                    <v-btn
+                      text
+                      color="primary"
+                      plain
+                      @click.stop="show_detail(item)"
+                    >>詳細を見る</v-btn>
+                    
+                  </v-card-action>
+                </v-card>
+              </v-slide-item>
+            </v-slide-group>
+          </v-col>
           <v-dialog v-model="dialog" max-width="800">
             <v-card>
               <v-card-title class="text-h5">
                 {{ dialog_title }}
               </v-card-title>
               <v-card-text>
-                <v-img
-                  src="@/assets/news_sample.jpg"
-                  width="100%"
-                />
                 {{ dialog_content }}
               </v-card-text>
               <v-card-actions>
@@ -98,7 +99,10 @@
           </v-dialog>
         </v-row>
       </v-container>
-      <router-view/>
+
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </v-main>
 
     <v-footer padless dark>
@@ -124,18 +128,38 @@ export default {
     dialog: false,
     dialog_title: '',
     dialog_content: '',
+    display_width: null,
+    display_height: null,
   }),
   created() {
     axios.get('./api/getNews.php').then((response) => {
       this.news = response.data
     })
+
+    this.display_width = document.body.clientWidth
+    this.display_height = document.documentElement.clientHeight
   },
   methods: {
     show_detail(item) {
       this.dialog = true
       this.dialog_title = item.title
       this.dialog_content = item.content
-    }
+    },
+    onResize () {
+        this.display_width = document.body.clientWidth
+        this.display_height = document.documentElement.clientHeight
+      },
   }
 };
 </script>
+
+<style scoped>
+.fade-enter-active {
+  transition: opacity 1s;
+  opacity: 0;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+</style>

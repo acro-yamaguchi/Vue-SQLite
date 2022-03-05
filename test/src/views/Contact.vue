@@ -14,7 +14,7 @@
           </v-alert>
           <v-form ref="form">
             <v-row>
-              <v-col cols="5" class="text-body-1 text-center cell_top cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell_top remove_border-right">
                 お名前<br>
                 <span style="color: red; font-size: 16px;">※必須</span>
               </v-col>
@@ -27,7 +27,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="5" class="text-body-1 text-center cell cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
                 E-mail<br>
                 <span style="color: red; font-size: 16px;">※必須</span>
               </v-col>
@@ -41,7 +41,7 @@
                   type="email"
                 ></v-text-field>
               </v-col>
-              <v-col cols="5" class="text-body-1 text-center cell cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
                 お電話番号<br>
                 <span style="color: red; font-size: 16px;">※必須(ハイフンなし、半角数字)</span>
               </v-col>
@@ -55,7 +55,7 @@
                   type="tel"
                 ></v-text-field>
               </v-col>
-              <v-col cols="5" class="text-body-1 text-center cell cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
                 カテゴリ<br>
                 <span style="color: red; font-size: 16px;">※必須</span>
               </v-col>
@@ -69,7 +69,7 @@
                   required
                 ></v-select>
               </v-col>
-              <v-col cols="5" class="text-body-1 text-center cell cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
                 件名
               </v-col>
               <v-col cols="7" class="cell">
@@ -79,7 +79,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="5" class="text-body-1 text-center cell cell_left">
+              <v-col cols="5" class="text-body-1 text-center cell remove_border-right">
                 お問い合わせ内容<br>
                 <span style="color: red; font-size: 16px;">※必須</span>
               </v-col>
@@ -151,7 +151,6 @@ export default {
       //全てのバリデーションに通過したとき
       if(this.$refs.form.validate()){
           this.loading = true
-          this.save_to_db()
           try{
             //テーブルの内容をバックエンドに送信
             axios.post('./api/contact.php', {
@@ -169,6 +168,7 @@ export default {
                 this.alert_message = '送信が完了しました!'
                 this.alert = true
                 this.$refs.form.clear()
+                this.save_to_db()
               } else {
                 console.log('メール送信: 失敗')
                 this.alert_type = 'error'
@@ -234,7 +234,7 @@ export default {
   border: solid;
 }
 
-.cell_left {
+.remove_border-right {
   border-right: none;
 }
 </style>
