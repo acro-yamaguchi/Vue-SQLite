@@ -167,8 +167,8 @@ export default {
                 this.alert_type = 'success'
                 this.alert_message = '送信が完了しました!'
                 this.alert = true
-                this.$refs.form.clear()
                 this.save_to_db()
+                this.$refs.form.reset()
               } else {
                 console.log('メール送信: 失敗')
                 this.alert_type = 'error'
