@@ -46,7 +46,57 @@
             />
           </v-col>
         </v-row>
-        <v-row justify="center" align="center">
+        <!-- お知らせが少ないときの応急処置 -->
+        <v-row justify="center" v-if="news.length === 1 || news.length === 2 && !$vuetify.breakpoint.mobile">
+          <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
+          <v-col cols="8" md="6">
+            <v-card
+            v-resize="onResize"
+            :width="$vuetify.breakpoint.mobile ? (display_width - 112) : (display_width - 128) / 2"
+            style="margin:0 8px auto; height: 280px;"
+            v-for="item in news"
+            :key="item"
+            >
+              <v-img
+                height="120px"
+                src="@/assets/news_sample.jpg"
+              />
+              <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
+              <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
+              <v-card-action>
+                <v-btn
+                  text
+                  color="primary"
+                  plain
+                  @click.stop="show_detail(item)"
+                >>詳細を見る</v-btn>
+                
+              </v-card-action>
+            </v-card>
+          </v-col>
+          <v-dialog v-model="dialog" max-width="800">
+            <v-card>
+              <v-card-title class="text-h5">
+                {{ dialog_title }}
+              </v-card-title>
+              <v-divider class="mx-3 mb-4"></v-divider>
+              <v-card-text>
+                {{ dialog_content }}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="#b5e61d"
+                  text
+                  @click.stop="dialog = false"
+                >
+                  CLOSE
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+        <v-row justify="center" v-else>
           <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
           <v-col cols="12" style="justify-content: center">
             <v-slide-group show-arrows center-active>
