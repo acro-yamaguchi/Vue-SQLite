@@ -59,7 +59,8 @@
             >
               <v-img
                 height="120px"
-                src="@/assets/news_sample.jpg"
+                contain
+                src="@/assets/news.png"
               />
               <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
               <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
@@ -110,7 +111,8 @@
                 style="margin:0 20px 8px 0; height: 280px;">
                   <v-img
                     height="120px"
-                    src="@/assets/news_sample.jpg"
+                    src="@/assets/news.png"
+                    contain
                   />
                   <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
                   <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
