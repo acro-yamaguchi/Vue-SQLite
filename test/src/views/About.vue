@@ -39,7 +39,7 @@
               主要取引銀行
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
-              北海道銀行 札幌駅前支店
+              北海道信用金庫 川沿支店
             </v-col>
             <v-col cols="3" class="text-body-1 text-center cell remove_border-right">
               業務内容
