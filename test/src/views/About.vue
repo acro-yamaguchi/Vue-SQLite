@@ -36,6 +36,12 @@
               札幌市中央区北6条西11丁目ベル・グランドーレ 402
             </v-col>
             <v-col cols="3" class="text-body-1 text-center cell remove_border-right">
+              本 店
+            </v-col>
+            <v-col cols="7" class="text-body-1 text-center cell">
+              北海道札幌市南区北の沢1728-4 2F
+            </v-col>
+            <v-col cols="3" class="text-body-1 text-center cell remove_border-right">
               主要取引銀行
             </v-col>
             <v-col cols="7" class="text-body-1 text-center cell">
