@@ -43,17 +43,28 @@ export default {
     methods:{
         submit(){
             try{
-                axios.post('./api/session.php', {
+                axios.post('./api/login.php', {
                   userId: this.userId,
                   pass: this.pass
                 })
                 .then((response) => {
-                    console.log(response.data)
+                    switch(response.data.result) {
+                        case 'false': window.location.href = './api/tVtGafxJsnVtL38ATGML.php'
+                            break
+                        case 'error': alert('DB接続エラー')
+                            break
+                        default: this.saveToken(response.data.result)
+                    }
                 })
             }
             catch{
-                alert('DB送信: 接続エラー')
+                alert('通信エラー')
             }
+        },
+        saveToken(data){
+            let arrayData = data.split('?')
+            sessionStorage.setItem('id', arrayData[0])
+            sessionStorage.setItem('token', arrayData[1])
         }
     }
 }
