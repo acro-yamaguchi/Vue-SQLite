@@ -13,6 +13,8 @@ import OtherSettings from '../views/OtherSettings.vue'
 
 import Login from '../views/Login.vue'
 
+// import axios from "axios"
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -54,7 +56,8 @@ const routes = [
           {
             path: '/admin/editNews',
             name: 'EditNews',
-            component: EditNews
+            component: EditNews,
+            meta: { requiresAuth: true }
           },
           {
             path: '/admin/releasedNews',
@@ -80,5 +83,21 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   let id = sessionStorage.getItem('id')
+//   let token = sessionStorage.getItem('token')
+//   axios.post('./api/check.php', {
+//     id: id,
+//     token: token
+//   })
+//   .then((response) => {
+//     if(to.matched.some(record => record.meta.requiresAuth) && !response.data){
+//       next({ path: '/admin/login', query: { redirect: to.fullPath } })
+//     } else {
+//       next()
+//     }
+//   })
+// })
 
 export default router

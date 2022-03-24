@@ -53,7 +53,7 @@ export default {
                             break
                         case 'error': alert('DB接続エラー')
                             break
-                        default: this.saveToken(response.data.result)
+                        default: this.success(response.data.result)
                     }
                 })
             }
@@ -61,10 +61,18 @@ export default {
                 alert('通信エラー')
             }
         },
+
+        success(data){
+            this.redirect()
+            this.saveToken(data)
+        },
         saveToken(data){
             let arrayData = data.split('?')
             sessionStorage.setItem('id', arrayData[0])
             sessionStorage.setItem('token', arrayData[1])
+        },
+        redirect(){
+            window.location.href = '/admin/editNews'
         }
     }
 }
