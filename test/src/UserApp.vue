@@ -49,13 +49,11 @@
         <!-- お知らせが少ないときの応急処置 -->
         <v-row justify="center" v-if="news.length === 1 || news.length === 2 && !$vuetify.breakpoint.mobile">
           <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
-          <v-col cols="8" md="6">
+          <v-col cols="5" v-for="item in news" :key="item">
             <v-card
             v-resize="onResize"
             :width="$vuetify.breakpoint.mobile ? (display_width - 112) : (display_width - 128) / 2"
-            style="margin:0 8px auto; height: 280px;"
-            v-for="item in news"
-            :key="item"
+            style="margin: 0 auto; height: 280px;"
             >
               <v-img
                 height="120px"

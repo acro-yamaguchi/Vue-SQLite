@@ -4,50 +4,26 @@
             <v-expansion-panel-header color="#b5e61d">
                 お知らせ編集
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
-                <v-container class="mt-5">
+            <v-expansion-panel-content class="px-0 py-3">
+                <v-container class="mt-5 pa-0">
                     <v-row justify='center'>
-                        <v-col cols="12">
-                            <v-row>
-                                <v-col cols="1" class="text-body-1 text-center cell_top remove_border-right">
-                                    No.
-                                </v-col>
-                                <v-col cols="4" class="text-body-1 text-center cell_top remove_border-right">
-                                    見出し
-                                </v-col>
-                                <v-col cols="4" class="text-body-1 text-center cell_top remove_border-right">
-                                    概要
-                                </v-col>
-                                <v-col cols="1" class="text-body-1 text-center cell_top remove_border-right">
-                                    公開中
-                                </v-col>
-                                <v-col cols="2" class="text-body-1 text-center cell_top">
-                                    編集
-                                </v-col>
-                            </v-row>
-
-                            <!-- news -->
-                            <v-row v-for="item in news" :key="item">
-                                <v-col cols="1" class="text-body-1 text-center cell_top remove_border-right">
-                                    {{ item.id }}
-                                </v-col>
-                                <v-col cols="4" class="text-body-1 text-center cell_top remove_border-right">
-                                    {{ item.title }}
-                                </v-col>
-                                <v-col cols="4" class="text-body-1 text-center cell_top remove_border-right">
-                                    {{ item.summary }}
-                                </v-col>
-                                <v-col cols="1" class="text-body-1 text-center cell_top remove_border-right">
-                                    ✅
-                                </v-col>
-                                <v-col cols="1" class="text-body-1 text-center cell_top">
-                                    <v-btn
-                                    color="success"
-                                    block
-                                    >編集</v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-col>
+                       <v-data-table
+                        :headers='headers'
+                        :items='news'
+                        hide-default-footer
+                        :items-per-page='-1'
+                        style="border: thin solid rgba(0, 0, 0, .12);"
+                        >
+                            <template v-slot:[`item.actions`]="{ item }">
+                                <v-btn color='primary' @click="editItem(item)">編集</v-btn>
+                            </template>
+                            <template v-slot:[`item.is_published`]="{ item }">
+                                <v-simple-checkbox
+                                 v-model="item.order"
+                                 disabled
+                                ></v-simple-checkbox>
+                            </template>
+                        </v-data-table>
                     </v-row>
                 </v-container>
             </v-expansion-panel-content>
@@ -60,13 +36,34 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            news: []
+            news: [],
+            headers: [
+                {
+                    text: 'ID',
+                    sortable: true,
+                    value: 'id',
+                    width: '15%',
+                    divider: true
+                },
+                { text: '見出し', sortable: false, value: 'title', width: '30%', divider: true },
+                { text: '概要', sortable: false, value: 'summary', width: '30%', divider: true },
+                { text: '公開中', sortable: true, value: 'is_published', width: '15%', divider: true, align: 'center' },
+                { text: '編集', sortable: false, value: 'actions', width: '10%', divider: true, align: 'center' },
+            ],
         }
     },
     created() {
-        axios.get('./api/getNews.php').then((response) => {
+        axios.get('./api/getAllNews.php').then((response) => {
             this.news = response.data
+            for(let i = 0; i < this.news.length; i++){
+                this.news[i].order = Boolean(this.news[i].order) 
+            }
         })
+    },
+    methods: {
+        editItem(item){
+            console.log(item)
+        }
     }
 }
 </script>
@@ -84,4 +81,5 @@ export default {
 .remove_border-right {
   border-right: none;
 }
+
 </style>

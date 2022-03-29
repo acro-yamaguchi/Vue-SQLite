@@ -5,7 +5,7 @@
                 <v-col cols="12" md='10'>
                     <v-expansion-panels>
                         <addNewsAccordion></addNewsAccordion>
-                        <editNewsAccordion></editNewsAccordion>
+                        <editNewsAccordion class="mt-5"></editNewsAccordion>
                     </v-expansion-panels>
                 </v-col>
             </v-row>
