@@ -18,6 +18,9 @@
                                         <v-text-field
                                         outlined
                                         dense
+                                        v-model="title"
+                                        :rules="Rules"
+                                        required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="3" class="text-body-2 text-center cell remove_border-right">
@@ -28,6 +31,9 @@
                                         <v-text-field
                                         outlined
                                         dense
+                                        v-model="summary"
+                                        :rules="Rules"
+                                        required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="3" class="text-body-2 text-center cell remove_border-right">
@@ -38,6 +44,9 @@
                                         <v-text-field
                                         outlined
                                         dense
+                                        v-model="content"
+                                        :rules="Rules"
+                                        required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="3" class="text-body-2 text-center cell remove_border-right">
@@ -80,20 +89,42 @@ export default {
     },
     data() {
         return {
-            image: {}
+            title: '',
+            summary: '',
+            content: '',
+            image: {},
+            Rules: [
+                v => !!v || '入力必須です',
+            ],
         }
     },
     methods: {
         submit(){
-            this.storeImage()
+            const img = this.image.src.replace(/^data:\w+\/\w+;base64,/, '')
+            const fileExtension = this.image.src.toString().slice(this.image.src.indexOf('/') + 1, this.image.src.indexOf(';'))
+            const date = new Date()
+            const fileName = date.valueOf()
+            const name = '' + fileName + '.' + fileExtension
+
+            this.storeNews(name)
+            this.storeImage(img, name)
         },
-        storeImage(){
-            let img = this.image.src.replace(/^data:\w+\/\w+;base64,/, '')
+        storeImage(img, name){
             let data = {
-                name: 'test.jpg',
+                name: name,
                 image: img
             }
             axios.post('./api/storeImage.php', data)
+        },
+        storeNews(name){
+            const imageUrl = '../storage/' + name
+            let data = {
+                title: this.title,
+                summary: this.summary,
+                content: this.content,
+                image: imageUrl
+            }
+            axios.post('./api/storeNews.php', data)
         }
     }
 }

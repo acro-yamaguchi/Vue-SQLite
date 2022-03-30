@@ -109,7 +109,7 @@
                 style="margin:0 20px 8px 0; height: 280px;">
                   <v-img
                     height="120px"
-                    src="@/assets/news.png"
+                    :src="item.image"
                     contain
                   />
                   <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
