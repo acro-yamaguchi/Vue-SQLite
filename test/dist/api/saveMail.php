@@ -13,7 +13,7 @@
     $create_at = date("Y-m-d H:i:s");
 
     try {
-        $db = new PDO("sqlite:../../db/happyposition.db");
+        $db = new PDO("sqlite:../../../db/happyposition.db");
         // 取得（SELECT）
         $stmt = $db->prepare("INSERT INTO mails (
             name, email, phone, category, title, content, create_at

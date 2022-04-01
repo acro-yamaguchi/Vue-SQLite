@@ -19,7 +19,7 @@
                             </template>
                             <template v-slot:[`item.is_published`]="{ item }">
                                 <v-simple-checkbox
-                                 v-model="item.order"
+                                 v-model="item.publish_order"
                                  disabled
                                 ></v-simple-checkbox>
                             </template>
@@ -56,7 +56,7 @@ export default {
         axios.get('./api/getAllNews.php').then((response) => {
             this.news = response.data
             for(let i = 0; i < this.news.length; i++){
-                this.news[i].order = Boolean(this.news[i].order) 
+                this.news[i].publish_order = Boolean(this.news[i].publish_order) 
             }
         })
     },

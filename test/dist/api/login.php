@@ -14,7 +14,7 @@
     $pass = $req['pass'];
 
     try {
-        $db = new PDO("sqlite:../../db/happyposition.db");
+        $db = new PDO("sqlite:../../../db/happyposition.db");
     } catch (Exception $e) {
         echo json_encode(array('result' => 'error'));
     }

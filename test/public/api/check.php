@@ -8,7 +8,7 @@
     $token = $req['token'];
 
     try {
-        $db = new PDO("sqlite:../../db/happyposition.db");
+        $db = new PDO("sqlite:../../../db/happyposition.db");
     } catch (Exception $e) {
         echo false;
     }

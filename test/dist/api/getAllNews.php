@@ -1,6 +1,6 @@
 <?php 
     try {
-        $db = new SQLite3("../../db/happyposition.db");
+        $db = new SQLite3("../../../db/happyposition.db");
         // 取得（SELECT）
         $result = $db->query('SELECT* FROM news ORDER BY id ASC');
         // 配列を初期化

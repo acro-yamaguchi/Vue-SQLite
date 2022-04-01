@@ -1,8 +1,8 @@
 <?php 
     try {
-        $db = new SQLite3("../../db/happyposition.db");
+        $db = new SQLite3("../../../db/happyposition.db");
         // 取得（SELECT）
-        $result = $db->query('SELECT* FROM news WHERE "order" IS NOT NULL ORDER BY "order" ASC LIMIT 5');
+        $result = $db->query('SELECT* FROM news WHERE publish_order IS NOT NULL ORDER BY publish_order ASC LIMIT 5');
         // 配列を初期化
         $ary = array();
         // 配列にデータベースの各行を追加

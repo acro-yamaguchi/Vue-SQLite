@@ -68,6 +68,7 @@
                                         color="success"
                                         large
                                         @click="submit"
+                                        :loading="loading"
                                     >登録</v-btn>
                                 </v-row>
                             </v-form>
@@ -96,18 +97,23 @@ export default {
             Rules: [
                 v => !!v || '入力必須です',
             ],
+            loading: false
         }
     },
     methods: {
         submit(){
-            const img = this.image.src.replace(/^data:\w+\/\w+;base64,/, '')
-            const fileExtension = this.image.src.toString().slice(this.image.src.indexOf('/') + 1, this.image.src.indexOf(';'))
-            const date = new Date()
-            const fileName = date.valueOf()
-            const name = '' + fileName + '.' + fileExtension
+            if(this.$refs.form.validate()){
+                this.loading = true
+                const img = this.image.src.replace(/^data:\w+\/\w+;base64,/, '')
+                const fileExtension = this.image.src.toString().slice(this.image.src.indexOf('/') + 1, this.image.src.indexOf(';'))
+                const date = new Date()
+                const fileName = date.valueOf()
+                const name = '' + fileName + '.' + fileExtension
 
-            this.storeNews(name)
-            this.storeImage(img, name)
+                this.storeNews(name)
+                console.log(img)
+                this.storeImage(img, name)
+            }
         },
         storeImage(img, name){
             let data = {
@@ -124,7 +130,9 @@ export default {
                 content: this.content,
                 image: imageUrl
             }
-            axios.post('./api/storeNews.php', data)
+            axios.post('./api/storeNews.php', data).then(() => {
+                this.loading = false
+            })
         }
     }
 }

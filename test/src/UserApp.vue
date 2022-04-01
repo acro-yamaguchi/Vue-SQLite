@@ -51,14 +51,13 @@
           <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
           <v-col cols="5" v-for="item in news" :key="item">
             <v-card
-            v-resize="onResize"
-            :width="$vuetify.breakpoint.mobile ? (display_width - 112) : (display_width - 128) / 2"
-            style="margin: 0 auto; height: 280px;"
+            :width="(news_width / 2 - 10)"
+            style="margin: 5px;"
             >
               <v-img
-                height="120px"
+                height="160px"
                 contain
-                src="@/assets/news.png"
+                :src="item.image === null ? require('@/assets/news.png') : item.image"
               />
               <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
               <v-card-text class="text--primary">{{ item.summary }}</v-card-text>
@@ -96,7 +95,7 @@
           </v-dialog>
         </v-row>
         <v-row justify="center" v-else>
-          <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
+          <v-col cols="12" class="text-h5 text-center">【お知らせ】 width: {{ news_width }}</v-col>
           <v-col cols="12" style="justify-content: center">
             <v-slide-group show-arrows center-active>
               <v-slide-item
@@ -104,12 +103,11 @@
                 :key="item"
               >
                 <v-card
-                v-resize="onResize"
-                :width="$vuetify.breakpoint.mobile ? (display_width - 112) : (display_width - 128) / 2"
-                style="margin:0 20px 8px 0; height: 280px;">
+                :width="$vuetify.breakpoint.mobile ? (news_width - 10) : (news_width / 2 - 10)"
+                style="margin:5px;">
                   <v-img
-                    height="120px"
-                    :src="item.image"
+                    height="160px"
+                    :src="item.image === null ? require('@/assets/news.png') : item.image"
                     contain
                   />
                   <v-card-title class="text-body-1">{{ item.title }}</v-card-title>
@@ -180,6 +178,7 @@ export default {
     dialog_content: '',
     display_width: null,
     display_height: null,
+    news_width: null,
   }),
   created() {
     axios.get('./api/getNews.php').then((response) => {
@@ -189,16 +188,21 @@ export default {
     this.display_width = document.body.clientWidth
     this.display_height = document.documentElement.clientHeight
   },
+  mounted() {
+    this.getWidth()
+    window.addEventListener('resize', this.getWidth)
+  },
   methods: {
     show_detail(item) {
       this.dialog = true
       this.dialog_title = item.title
       this.dialog_content = item.content
     },
-    onResize () {
-        this.display_width = document.body.clientWidth
-        this.display_height = document.documentElement.clientHeight
-      },
+    getWidth() {
+      let slide_wrapper = document.getElementsByClassName("v-slide-group__wrapper");
+      let news_width = slide_wrapper[0].clientWidth
+      this.news_width = news_width - 104
+    }
   }
 };
 </script>
