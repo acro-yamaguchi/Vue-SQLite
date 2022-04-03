@@ -39,8 +39,8 @@
         <v-row justify="center" no-gutters>
           <v-col cols="12" md="9">
             <v-img
-              alt="画像"
-              src="@/assets/Top.png"
+              alt="TOP画像"
+              :src="top_image[0].image_url === null ? require('@/assets/Top.png') : top_image[0].image_url"
               width="100%"
               transition="fade-transition"
             />
@@ -173,6 +173,7 @@ export default {
       { name:'会社案内', to: '/about' },
     ],
     news: [],
+    top_image: [],
     dialog: false,
     dialog_title: '',
     dialog_content: '',
@@ -183,6 +184,9 @@ export default {
   created() {
     axios.get('./api/getNews.php').then((response) => {
       this.news = response.data
+    })
+    axios.get('./api/getTopImage.php').then((response) => {
+      this.top_image = response.data
     })
 
     this.display_width = document.body.clientWidth

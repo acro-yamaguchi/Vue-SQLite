@@ -28,14 +28,15 @@
         $result = $stmt->execute();
 
         if($result) {
-            echo json_encode(array('result' => true));
+            echo true;
         } else {
-            echo json_encode(array('result' => false));
+            echo false;
         }
     }
     catch(Exception $e) {
         print 'DB接続でエラーが発生';
         print $e->getTraceAsString();
+        echo false;
     }
     finally {
         $db = null;

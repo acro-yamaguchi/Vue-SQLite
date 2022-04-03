@@ -110,9 +110,7 @@ export default {
                 const fileName = date.valueOf()
                 const name = '' + fileName + '.' + fileExtension
 
-                this.storeNews(name)
-                console.log(img)
-                this.storeImage(img, name)
+                this.storeNews(img, name)
             }
         },
         storeImage(img, name){
@@ -120,9 +118,11 @@ export default {
                 name: name,
                 image: img
             }
-            axios.post('./api/storeImage.php', data)
+            axios.post('./api/storeImage.php', data).then(() => {
+                this.loading = false
+            })
         },
-        storeNews(name){
+        storeNews(img, name){
             const imageUrl = '../storage/' + name
             let data = {
                 title: this.title,
@@ -130,8 +130,12 @@ export default {
                 content: this.content,
                 image: imageUrl
             }
-            axios.post('./api/storeNews.php', data).then(() => {
-                this.loading = false
+            axios.post('./api/storeNews.php', data).then((response) => {
+                if(response.data.result) {
+                    this.storeImage(img, name)
+                } else {
+                    alert('DB接続エラー')
+                }               
             })
         }
     }

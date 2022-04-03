@@ -24,6 +24,7 @@ const routes = [
     path: '/',
     name: 'App',
     component: App,
+    redirect: '/top',
     children: [
       {
         path: '/top',
@@ -55,6 +56,7 @@ const routes = [
         name: 'AdminApp',
         component: AdminApp,
         meta: { requiresAuth: true },
+        redirect: '/admin/editNews',
         children: [
           {
             path: '/admin/editNews',
