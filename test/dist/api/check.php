@@ -7,6 +7,11 @@
     $id = $req['id'];
     $token = $req['token'];
 
+    if($id === '' || $token === ''){
+        echo false;
+        exit();
+    }
+
     try {
         $db = new PDO("sqlite:../../../db/happyposition.db");
     } catch (Exception $e) {

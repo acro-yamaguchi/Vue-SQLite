@@ -63,16 +63,18 @@ export default {
         },
 
         success(data){
-            this.redirect()
             this.saveToken(data)
+            this.redirect()
         },
         saveToken(data){
             let arrayData = data.split('?')
-            sessionStorage.setItem('id', arrayData[0])
-            sessionStorage.setItem('token', arrayData[1])
+            this.$store.dispatch("auth", {
+                id: arrayData[0],
+                token: arrayData[1]
+            })
         },
         redirect(){
-            window.location.href = '/admin/editNews'
+            this.$router.push('/admin/editNews')
         }
     }
 }
