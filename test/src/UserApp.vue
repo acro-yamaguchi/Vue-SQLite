@@ -40,7 +40,7 @@
           <v-col cols="12" md="9">
             <v-img
               alt="TOP画像"
-              :src="top_image[0].image_url === null ? require('@/assets/Top.png') : top_image[0].image_url"
+              :src="top_image.image_url == null ? require('@/assets/Top.png') : top_image.image_url"
               width="100%"
               transition="fade-transition"
             />
@@ -49,10 +49,9 @@
         <!-- お知らせが少ないときの応急処置 -->
         <v-row justify="center" v-if="news.length === 1 || news.length === 2 && !$vuetify.breakpoint.mobile">
           <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
-          <v-col cols="5" v-for="item in news" :key="item">
+          <v-col cols="10" sm="5" v-for="item in news" :key="item">
             <v-card
-            :width="(news_width / 2 - 10)"
-            style="margin: 5px;"
+            width="100%"
             >
               <v-img
                 height="160px"
@@ -76,9 +75,13 @@
             <v-card>
               <v-card-title class="text-h5">
                 {{ dialog_title }}
+                <v-img
+                  width="100%"
+                  :src="dialog_image === null ? require('@/assets/news.png') : dialog_image"
+                  contain
+                />
               </v-card-title>
-              <v-divider class="mx-3 mb-4"></v-divider>
-              <v-card-text>
+              <v-card-text style="white-space: pre-wrap;">
                 {{ dialog_content }}
               </v-card-text>
               <v-card-actions>
@@ -95,7 +98,7 @@
           </v-dialog>
         </v-row>
         <v-row justify="center" v-else>
-          <v-col cols="12" class="text-h5 text-center">【お知らせ】 width: {{ news_width }}</v-col>
+          <v-col cols="12" class="text-h5 text-center">【お知らせ】</v-col>
           <v-col cols="12" style="justify-content: center">
             <v-slide-group show-arrows center-active>
               <v-slide-item
@@ -103,7 +106,7 @@
                 :key="item"
               >
                 <v-card
-                :width="$vuetify.breakpoint.mobile ? (news_width - 10) : (news_width / 2 - 10)"
+                :width="$vuetify.breakpoint.mobile ? (news_width - 22) : (news_width / 2 - 10)"
                 style="margin:5px;">
                   <v-img
                     height="160px"
@@ -129,8 +132,13 @@
             <v-card>
               <v-card-title class="text-h5">
                 {{ dialog_title }}
+                <v-img
+                  width="100%"
+                  :src="dialog_image === null ? require('@/assets/news.png') : dialog_image"
+                  contain
+                />
               </v-card-title>
-              <v-card-text>
+              <v-card-text style="white-space: pre-wrap;">
                 {{ dialog_content }}
               </v-card-text>
               <v-card-actions>
@@ -177,8 +185,7 @@ export default {
     dialog: false,
     dialog_title: '',
     dialog_content: '',
-    display_width: null,
-    display_height: null,
+    dialog_image: null,
     news_width: null,
   }),
   created() {
@@ -186,11 +193,8 @@ export default {
       this.news = response.data
     })
     axios.get('./api/getTopImage.php').then((response) => {
-      this.top_image = response.data
+      this.top_image = response.data[0]
     })
-
-    this.display_width = document.body.clientWidth
-    this.display_height = document.documentElement.clientHeight
   },
   mounted() {
     this.getWidth()
@@ -201,6 +205,8 @@ export default {
       this.dialog = true
       this.dialog_title = item.title
       this.dialog_content = item.content
+      this.dialog_image = item.image
+
     },
     getWidth() {
       let slide_wrapper = document.getElementsByClassName("v-slide-group__wrapper");

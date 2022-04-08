@@ -13,6 +13,7 @@
                                     outlined
                                     dense
                                     hide-details
+                                    clearable
                                     v-model="order1"
                                 ></v-text-field>
                             </v-col>
@@ -27,6 +28,7 @@
                                     outlined
                                     dense
                                     hide-details
+                                    clearable
                                     v-model="order2"
                                 ></v-text-field>
                             </v-col>
@@ -41,6 +43,7 @@
                                     outlined
                                     dense
                                     hide-details
+                                    clearable
                                     v-model="order3"
                                 ></v-text-field>
                             </v-col>
@@ -55,6 +58,7 @@
                                     outlined
                                     dense
                                     hide-details
+                                    clearable
                                     v-model="order4"
                                 ></v-text-field>
                             </v-col>
@@ -69,6 +73,7 @@
                                     outlined
                                     dense
                                     hide-details
+                                    clearable
                                     v-model="order5"
                                 ></v-text-field>
                             </v-col>

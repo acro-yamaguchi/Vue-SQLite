@@ -2,7 +2,7 @@
     <div class="login">
         <v-container fluid class="screen">
                 <v-row justify='center'>
-                    <v-card max-width="800" class="card">
+                    <v-card :width="$vuetify.breakpoint.mobile ? 300: 500" class="card">
                         <v-toolbar flat dark color="#b5e61d">
                             <v-toolbar-title>管理者ページ - ログイン</v-toolbar-title>
                         </v-toolbar>
@@ -30,10 +30,12 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
-                            <v-card-actions></v-card-actions>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
                                 <v-btn text color="#b5e61d" @click="submit">
                                     送信
                                 </v-btn>
+                            </v-card-actions>
                         </v-container>
                     </v-card>
                 </v-row>

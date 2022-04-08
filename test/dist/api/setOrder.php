@@ -7,9 +7,6 @@
     $order = intval($req['order']);
     $id = intval($req['id']);
 
-    echo $order;
-    echo $id;
-
     try {
         $db = new PDO("sqlite:../../../db/happyposition.db");
 
@@ -23,6 +20,10 @@
             $stmt->bindParam(':order', $order, PDO::PARAM_INT);
     
             $result = $stmt->execute();
+        }
+
+        if($id == 0){
+            exit();
         }
 
         $stmt = $db->prepare("UPDATE news SET publish_order=:order WHERE id=:id");

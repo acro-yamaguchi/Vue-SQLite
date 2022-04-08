@@ -41,13 +41,13 @@
                                         <span style="color: red; font-size: 12px;">※必須</span>
                                     </v-col>
                                     <v-col cols="7" class="cell">
-                                        <v-text-field
+                                        <v-textarea
                                         outlined
-                                        dense
+                                        auto-grow
                                         v-model="content"
                                         :rules="Rules"
                                         required
-                                        ></v-text-field>
+                                        ></v-textarea>
                                     </v-col>
                                     <v-col cols="3" class="text-body-2 text-center cell remove_border-right">
                                         画像<br>
@@ -60,7 +60,7 @@
                                         プレビュー<br>
                                     </v-col>
                                     <v-col cols="7" class="cell">
-                                        <img :src="image.src">
+                                        <img :src="image.src == null ? require('@/assets/news.png') : image.src">
                                     </v-col>
                                 </v-row>
                                 <v-row justify="end" class="mt-6">
@@ -131,10 +131,11 @@ export default {
                 image: imageUrl
             }
             axios.post('./api/storeNews.php', data).then((response) => {
-                if(response.data.result) {
+                if(response.data) {
                     this.storeImage(img, name)
                 } else {
                     alert('DB接続エラー')
+                    this.loading = false
                 }               
             })
         }

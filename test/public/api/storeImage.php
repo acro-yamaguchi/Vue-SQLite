@@ -8,5 +8,5 @@
     $image_base64 = $req['image'];
 
     $img = base64_decode($image_base64);
-    file_put_contents('../../../storage/'.$name, $img);
+    file_put_contents('../../storage/'.$name, $img);
 ?>
